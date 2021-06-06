@@ -50,6 +50,10 @@ int main( void )
     // initialize stdio and wait for USB CDC connect
     stdio_init_all();
 
+    // initialize the LED pin
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+
     while (!tud_cdc_connected()) {
         tight_loop_contents();
     }
@@ -69,6 +73,9 @@ int main( void )
     } else {
         printf("success!\n");
     }
+
+    // Show Init OK
+    gpio_put(PICO_DEFAULT_LED_PIN, 1);
 
     // Start the join process and wait
     printf("Joining LoRaWAN network ... ");
